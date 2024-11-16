@@ -5,6 +5,17 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# kubectx and kubens autocompletion scripts
+fpath=(~/.config/zsh/completions $fpath)
+
+# AWS CLI autocompletion
+autoload -Uz bashcompinit && bashcompinit
+complete -C '/usr/local/bin/aws_completer' aws
+
+# Initialize completion system
+autoload -Uz compinit
+compinit
+
 #!/bin/sh
 [ -f "$HOME/.local/share/zap/zap.zsh" ] && source "$HOME/.local/share/zap/zap.zsh"
 
@@ -47,5 +58,8 @@ if [ -f ~/.bash_aliases ]; then
 fi
 
 [[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
+
+source <(kubectl completion zsh)
+compdef k='kubectl'
 
 eval "$(aactivator init)"

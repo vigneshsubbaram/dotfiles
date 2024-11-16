@@ -7,6 +7,9 @@ sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt autoremove -y
 # Add repositories for python3.12
 sudo add-apt-repository ppa:deadsnakes/ppa -y
 
+# Add repositories for WSLUtilities
+sudo add-apt-repository ppa:wslutilities/wslu
+
 # Add Docker's official GPG key
 sudo install -m 0755 -d /etc/apt/keyrings
 sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
@@ -24,10 +27,31 @@ sudo apt-get update
 # Install packages
 sudo apt install -y python3.12-full python-is-python3 gcc zsh make git \
     apt-transport-https docker-ce docker-ce-cli containerd.io \
-    docker-buildx-plugin docker-compose-plugin net-tools stow
+    docker-buildx-plugin docker-compose-plugin net-tools stow \
+    unzip wslu python3-pip
 
 # Add your user to the docker group so that you can run docker without sudo
 sudo usermod -aG docker "$USER"
+
+# Install commitizen
+pip install --user -U commitizen
+
+# Install AWS CLI
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/awscliv2.zip" && \
+    unzip /tmp/awscliv2.zip && sudo /tmp/aws/install
+
+# Install kubectl
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256" -o "/tmp/kubectl" && \
+    sudo install -o root -g root -m 0755 /tmp/kubectl /usr/local/bin/kubectl
+
+# Install kubectx and kubens
+sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
+sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
+sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
+
+# Setup auto-completion for kubectx and kubens
+sudo ln -s /opt/kubectx/completion/_kubectx.zsh ~/.config/zsh/completions/_kubectx
+sudo ln -s /opt/kubectx/completion/_kubens.zsh ~/.config/zsh/completions/_kubens
 
 # aactivator.py script
 AACTIVATOR_URL="https://raw.githubusercontent.com/Yelp/aactivator/master/aactivator.py"

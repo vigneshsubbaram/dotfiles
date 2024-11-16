@@ -108,6 +108,11 @@
     # example               # example user-defined segment (see prompt_example function below)
   )
 
+  # A list of commands that will trigger to show current context
+  typeset -g POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND='kubectl|helm|kubens|kubectx|oc|istioctl|kogito|k9s|helmfile|fluxctl|stern|ytt'
+  # Specify what Kubernetes context information to show on the prompt (CLOUD_PROVIDER/PROJECT_NAME/CLUSTER_NAME/NAMESPACE)
+  typeset -g POWERLEVEL9K_KUBECONTEXT_DEFAULT_CONTENT_EXPANSION='${${P9K_KUBECONTEXT_CLOUD_NAME:+/$P9K_KUBECONTEXT_CLOUD_NAME/$P9K_KUBECONTEXT_CLOUD_ACCOUNT/$P9K_KUBECONTEXT_CLOUD_CLUSTER}:-$P9K_KUBECONTEXT_NAME}${${:-/$P9K_KUBECONTEXT_NAMESPACE}:#/default'
+
   # Defines character set used by powerlevel10k. It's best to let `p10k configure` set it for you.
   typeset -g POWERLEVEL9K_MODE=powerline
   # When set to `moderate`, some icons will have an extra space after them. This is meant to avoid

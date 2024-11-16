@@ -26,6 +26,9 @@ alias gpg-check="gpg2 --keyserver-options auto-key-retrieve --verify"
 # receive the key of a developer
 alias gpg-retrieve="gpg2 --keyserver-options auto-key-retrieve --receive-keys"
 
+# kubectl
+alias k=kubectl
+
 if [[ $TERM == "xterm-kitty" ]]; then
     alias ssh="kitty +kitten ssh"
 fi

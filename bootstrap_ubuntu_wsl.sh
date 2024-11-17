@@ -53,11 +53,6 @@ sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
 sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
 sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
 
-# Setup auto-completion for kubectx and kubens
-mkdir -p ~/config/zsh/completions
-sudo ln -s /opt/kubectx/completion/_kubectx.zsh ~/.config/zsh/completions/_kubectx
-sudo ln -s /opt/kubectx/completion/_kubens.zsh ~/.config/zsh/completions/_kubens
-
 # Install bosh CLI
 curl -sL https://api.github.com/repos/cloudfoundry/bosh-cli/releases/latest | grep "browser_download_url.*linux-amd64" \
     | cut -d : -f 2,3 | tr -d \" | sudo wget -O /usr/local/bin/bosh -qi - && sudo chmod a+x /usr/local/bin/bosh
@@ -109,6 +104,11 @@ stow -t "$HOME/.config" .config
 zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1 --keep
 
 stow -t "$HOME/.config" .config
+
+# Setup auto-completion for kubectx and kubens
+mkdir -p ~/.config/zsh/completions
+sudo ln -s /opt/kubectx/completion/_kubectx.zsh ~/.config/zsh/completions/_kubectx
+sudo ln -s /opt/kubectx/completion/_kubens.zsh ~/.config/zsh/completions/_kubens
 
 # Windows terminal
 windowsUsername=$(powershell.exe '$env:UserName' | tr -d '\r')

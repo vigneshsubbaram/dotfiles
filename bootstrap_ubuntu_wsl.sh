@@ -22,16 +22,20 @@ echo \
   $(. /etc/os-release && echo "$VERSION_CODENAME") stable" |
     sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
 
+# Add sources for vault
+wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+
 sudo apt-get update
 
 # Install packages
 sudo apt install -y python3.12-full python-is-python3 gcc zsh make git \
     apt-transport-https docker-ce docker-ce-cli containerd.io \
     docker-buildx-plugin docker-compose-plugin net-tools stow \
-    unzip wslu python3-pip
+    unzip wslu python3-pip vault
 
 # Add your user to the docker group so that you can run docker without sudo
-sudo usermod -aG docker "$USER"
+sudo usermod -aG docker "$USER" && sudo systemctl start docker
 
 # Install commitizen
 pip install --user -U commitizen
@@ -41,7 +45,7 @@ curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/awscliv
     unzip /tmp/awscliv2.zip && sudo /tmp/aws/install
 
 # Install kubectl
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256" -o "/tmp/kubectl" && \
+curl -L "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" -o /tmp/kubectl && \
     sudo install -o root -g root -m 0755 /tmp/kubectl /usr/local/bin/kubectl
 
 # Install kubectx and kubens
@@ -52,6 +56,17 @@ sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
 # Setup auto-completion for kubectx and kubens
 sudo ln -s /opt/kubectx/completion/_kubectx.zsh ~/.config/zsh/completions/_kubectx
 sudo ln -s /opt/kubectx/completion/_kubens.zsh ~/.config/zsh/completions/_kubens
+
+# Install bosh CLI
+curl -sL https://api.github.com/repos/cloudfoundry/bosh-cli/releases/latest | grep "browser_download_url.*linux-amd64" \
+    | cut -d : -f 2,3 | tr -d \" | sudo wget -O /usr/local/bin/bosh -qi - && sudo chmod a+x /usr/local/bin/bosh
+
+# Install CF CLI
+curl -L https://github.com/cloudfoundry/cli/releases/download/v6.53.0/cf-cli_6.53.0_linux_x86-64.tgz | tar xz -C /tmp && \
+    sudo mv /tmp/cf /usr/local/bin
+
+# Install k9s
+curl -L https://github.com/derailed/k9s/releases/download/v0.32.7/k9s_linux_amd64.deb | sudo dpkg -i -
 
 # aactivator.py script
 AACTIVATOR_URL="https://raw.githubusercontent.com/Yelp/aactivator/master/aactivator.py"

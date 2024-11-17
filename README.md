@@ -48,6 +48,9 @@ adduser ${NEW_USER} sudo
 tee /etc/wsl.conf <<_EOF
 [user]
 default=${NEW_USER}
+
+[boot]
+systemd=true
 _EOF
 ```
 

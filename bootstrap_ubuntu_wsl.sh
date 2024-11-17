@@ -29,7 +29,7 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashi
 sudo apt-get update
 
 # Install packages
-sudo apt install -y python3.12-full python-is-python3 gcc zsh make git \
+sudo NEEDRESTART_MODE=a apt install -y python3.12-full python-is-python3 gcc zsh make git \
     apt-transport-https docker-ce docker-ce-cli containerd.io \
     docker-buildx-plugin docker-compose-plugin net-tools stow \
     unzip wslu python3-pip vault
@@ -42,7 +42,7 @@ pip install --user -U commitizen
 
 # Install AWS CLI
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/awscliv2.zip" && \
-    unzip /tmp/awscliv2.zip && sudo /tmp/aws/install
+    unzip /tmp/awscliv2.zip -d /tmp && sudo /tmp/aws/install
 
 # Install kubectl
 curl -L "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" -o /tmp/kubectl && \

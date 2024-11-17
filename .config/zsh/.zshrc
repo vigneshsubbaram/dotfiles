@@ -60,6 +60,5 @@ fi
 [[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
 
 source <(kubectl completion zsh)
-compdef k='kubectl'
 
 eval "$(aactivator init)"

@@ -2,13 +2,13 @@
 
 set -e
 
-sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt autoremove -y
+sudo apt-get update -y && sudo NEEDRESTART_MODE=a apt-get upgrade -y && sudo apt autoremove -y
 
 # Add repositories for python3.12
 sudo add-apt-repository ppa:deadsnakes/ppa -y
 
 # Add repositories for WSLUtilities
-sudo add-apt-repository ppa:wslutilities/wslu
+sudo add-apt-repository ppa:wslutilities/wslu -y
 
 # Add Docker's official GPG key
 sudo install -m 0755 -d /etc/apt/keyrings
@@ -54,6 +54,7 @@ sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
 sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
 
 # Setup auto-completion for kubectx and kubens
+mkdir -p ~/config/zsh/completions
 sudo ln -s /opt/kubectx/completion/_kubectx.zsh ~/.config/zsh/completions/_kubectx
 sudo ln -s /opt/kubectx/completion/_kubens.zsh ~/.config/zsh/completions/_kubens
 
@@ -66,7 +67,8 @@ curl -L https://github.com/cloudfoundry/cli/releases/download/v6.53.0/cf-cli_6.5
     sudo mv /tmp/cf /usr/local/bin
 
 # Install k9s
-curl -L https://github.com/derailed/k9s/releases/download/v0.32.7/k9s_linux_amd64.deb | sudo dpkg -i -
+curl -L -o /tmp/k9s.deb https://github.com/derailed/k9s/releases/download/v0.32.7/k9s_linux_amd64.deb && \
+    sudo dpkg -i  /tmp/k9s.deb
 
 # aactivator.py script
 AACTIVATOR_URL="https://raw.githubusercontent.com/Yelp/aactivator/master/aactivator.py"

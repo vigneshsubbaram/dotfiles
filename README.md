@@ -57,7 +57,7 @@ _EOF
 - Terminate your WSL distro for your changes to take effect
 
 ```bash
-wsl --shutdown DistroA
+wsl --terminate DistroA
 ```
 
 ## Installation

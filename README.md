@@ -1,6 +1,6 @@
 # My dotfiles
 
-Welcome to my dotfiles collection! This repository contains all the core configuration files I rely on for Python development and everyday computing. These dotfiles ensure I can maintain the same streamlined and productive workflow no matter which system I'm using.
+Welcome to my dotfiles collection! This repository contains all the core configuration files I rely on for development and everyday computing. These dotfiles ensure I can maintain the same streamlined and productive workflow no matter which system I'm using.
 
 ## WSL Distro Install and Setup Instructions
 
@@ -42,7 +42,7 @@ Is the information correct? [Y/n]
 adduser ${NEW_USER} sudo
 ```
 
-- Set the default user in /etc/wsl.conf:
+- Set the default user in `/etc/wsl.conf`:
 
 ```bash
 tee /etc/wsl.conf <<_EOF
@@ -59,6 +59,8 @@ _EOF
 ```bash
 wsl --terminate DistroA
 ```
+
+- Ensure that the `builtinGlyphs` setting is disabled in your WSL configuration.
 
 ## Installation
 

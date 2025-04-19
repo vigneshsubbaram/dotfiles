@@ -41,7 +41,12 @@ Darwin)
     ;;
 
 Linux)
-    alias ls='ls --color=auto'
+    alias ls="eza --icons --git"
+    alias l='eza -alg --color=always --group-directories-first --git'
+    alias ll='eza -aliSgh --color=always --group-directories-first --icons --header --long --git'
+    alias lt='eza -@alT --color=always --git'
+    alias llt="eza --oneline --tree --icons --git-ignore"
+    alias lr='eza -alg --sort=modified --color=always --group-directories-first --git'
     ;;
 
 CYGWIN* | MINGW32* | MSYS* | MINGW*)

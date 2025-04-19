@@ -69,5 +69,16 @@ tools:
   ytt:
     repo: carvel-dev/ytt
 
-  nvm:
-    repo: nvm-sh/nvm
+  delta:
+    repo: dandavison/delta
+
+  fd: sharkdp/fd
+
+  bat:
+    repo: sharkdp/bat
+
+  eza:
+    repo: eza-community/eza
+
+  fzf:
+    repo: junegunn/fzf

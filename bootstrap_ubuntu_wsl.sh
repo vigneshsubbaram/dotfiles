@@ -49,7 +49,7 @@ AACTIVATOR_URL="https://raw.githubusercontent.com/Yelp/aactivator/master/aactiva
 
 INSTALL_DIR="$HOME/.local/bin"
 [[ ! -d $INSTALL_DIR ]] && mkdir -p "$INSTALL_DIR"
-path+=${INSTALL_DIR}
+PATH+=${INSTALL_DIR}
 
 # Download the aactivator.py script
 curl -o "${INSTALL_DIR}/aactivator" "${AACTIVATOR_URL}"
@@ -67,7 +67,7 @@ USER_WORKSPACE=$HOME/workspace/$USER
 # Download and setup config files
 DOTFILES_PATH=$USER_WORKSPACE/dotfiles
 if [[ ! -d $DOTFILES_PATH ]]; then
-    git clone https://github.com/vigneshsubbaram/dotfiles.git "$DOTFILES_PATH"
+    git clone -b "introduce_dotfiles" https://github.com/vigneshsubbaram/dotfiles.git "$DOTFILES_PATH"
 else
     git -C "$DOTFILES_PATH" pull --ff
 fi

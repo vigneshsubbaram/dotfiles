@@ -57,5 +57,5 @@ CYGWIN* | MINGW32* | MSYS* | MINGW*)
     ;;
 esac
 
-#disable globbing for pip
+# disable globbing for pip
 alias pip='noglob pip'

@@ -38,11 +38,18 @@ sudo NEEDRESTART_MODE=a apt install -y python3.12-full python-is-python3 gcc zsh
     unzip wslu python3-pip vault
 
 # Add your user to the docker group so that you can run docker without sudo
-sudo usermod -aG docker "$USER" && sudo systemctl start docker
+sudo usermod -aG docker "$USER" && sudo systemctl enable docker && sudo systemctl start docker
+
+# Install nvm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
 
 # Install AWS CLI
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/awscliv2.zip" && \
     unzip /tmp/awscliv2.zip -d /tmp && sudo /tmp/aws/install
+
+# Install kubectl
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" & \
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
 # aactivator.py script
 AACTIVATOR_URL="https://raw.githubusercontent.com/Yelp/aactivator/master/aactivator.py"

@@ -48,7 +48,7 @@ curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/awscliv
     unzip /tmp/awscliv2.zip -d /tmp && sudo /tmp/aws/install
 
 # Install kubectl
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" & \
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
 sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
 # aactivator.py script

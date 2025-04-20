@@ -19,7 +19,7 @@ tools:
     repo: cloudfoundry/bosh-cli
 
   helm:
-    repo: helm/helm
+    repo: helm/helm 
 
   helmfile:
     repo: helmfile/helmfile
@@ -82,3 +82,6 @@ tools:
 
   fzf:
     repo: junegunn/fzf
+
+  rg:
+    repo: BurntSushi/ripgrep

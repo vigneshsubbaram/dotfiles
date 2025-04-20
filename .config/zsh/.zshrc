@@ -59,6 +59,9 @@ fi
 
 [[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
 
-source <(kubectl completion zsh)
+command -v fzf >/dev/null 2>&1 && {
+	source <(kubectl completion zsh | sed 's#${requestComp} 2>/dev/null#${requestComp} 2>/dev/null | head -n -1 | fzf  --multi=0 #g')
+}
+source <(fzf --zsh)
 
 eval "$(aactivator init)"

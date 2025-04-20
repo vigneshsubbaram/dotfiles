@@ -34,7 +34,7 @@ sudo apt-get update
 # Install packages
 sudo NEEDRESTART_MODE=a apt install -y python3.12-full python-is-python3 gcc zsh make git \
     apt-transport-https docker-ce docker-ce-cli containerd.io \
-    docker-buildx-plugin docker-compose-plugin net-tools stow \
+    docker-buildx-plugin docker-compose-plugin net-tools stow tree \
     unzip wslu python3-pip vault
 
 # Add your user to the docker group so that you can run docker without sudo
@@ -87,6 +87,8 @@ stow -t "$HOME/.config" .config
 
 ln -sf "$HOME/.config/git/.gitconfig" "$HOME/.gitconfig"
 ln -sf "$HOME/.config/git/.gitignore" "$HOME/.gitignore"
+ln -sf "$HOME/.config/dotbins/.dotbins.yaml" "$HOME/.dotbins.yaml"
+ln -sf "$HOME/.config/bash/.bashrc" "$HOME/.bashrc"
 
 # Install commitizen
 pip install --user -U commitizen dotbins
@@ -103,15 +105,5 @@ stow -t "$HOME/.config" .config
 mkdir -p ~/.config/zsh/completions
 curl -sSL https://raw.githubusercontent.com/ahmetb/kubectx/master/completion/_kubectx.zsh -o ~/.config/zsh/completions/_kubectx
 curl -sSL https://raw.githubusercontent.com/ahmetb/kubectx/master/completion/_kubens.zsh -o ~/.config/zsh/completions/_kubens
-
-# Windows terminal
-windowsUsername=$(powershell.exe '$env:UserName' | tr -d '\r')
-terminalDir=/home/vignesh/../../mnt/c/Users/$windowsUsername/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState
-downloadsDir=/home/vignesh/../../mnt/c/Users/$windowsUsername/Downloads
-
-if [ ! -e "$terminalDir/settings.json" ]; then
-    cp ./windows-terminal-settings.json "$terminalDir/LocalState/settings.json"
-    cp ./icons/ubuntu.png "$downloadsDir"
-fi
 
 popd

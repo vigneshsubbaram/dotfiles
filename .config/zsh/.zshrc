@@ -10,16 +10,16 @@ fpath=(~/.config/zsh/completions $fpath)
 
 # AWS CLI autocompletion
 autoload -Uz bashcompinit && bashcompinit
-complete -C '/usr/local/bin/aws_completer' aws
 
 # Initialize completion system
-autoload -Uz compinit
-compinit
+autoload -Uz compinit && compinit
 
-#!/bin/sh
+# AWS CLI autocompletion
+complete -C '/usr/local/bin/aws_completer' aws
+
 [ -f "$HOME/.local/share/zap/zap.zsh" ] && source "$HOME/.local/share/zap/zap.zsh"
 
-#Enable colors
+# Enable colors
 autoload -U colors && colors
 
 # history

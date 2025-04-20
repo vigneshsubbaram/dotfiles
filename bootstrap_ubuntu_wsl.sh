@@ -56,7 +56,7 @@ AACTIVATOR_URL="https://raw.githubusercontent.com/Yelp/aactivator/master/aactiva
 
 INSTALL_DIR="$HOME/.local/bin"
 [[ ! -d $INSTALL_DIR ]] && mkdir -p "$INSTALL_DIR"
-PATH+=${INSTALL_DIR}
+PATH="${PATH:+${PATH}:}${INSTALL_DIR}"
 
 # Download the aactivator.py script
 curl -o "${INSTALL_DIR}/aactivator" "${AACTIVATOR_URL}"

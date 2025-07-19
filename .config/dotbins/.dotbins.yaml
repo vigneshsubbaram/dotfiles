@@ -18,9 +18,6 @@ tools:
   bosh:
     repo: cloudfoundry/bosh-cli
 
-  helm:
-    repo: helm/helm 
-
   helmfile:
     repo: helmfile/helmfile
 
@@ -62,6 +59,7 @@ tools:
     repo: kubevela/kubevela
     asset_patterns:
       linux: vela-v{version}-linux-amd64.tar.gz
+    tag: v1.9.5
 
   yq:
     repo: mikefarah/yq
@@ -85,3 +83,36 @@ tools:
 
   rg:
     repo: BurntSushi/ripgrep
+
+  act:
+    repo: nektos/act
+
+  cilium:
+    repo: cilium/cilium-cli
+
+  opa:
+    repo: open-policy-agent/opa
+    tag: v0.58.0
+
+  regal:
+    repo: StyraInc/regal
+    tag: v0.18.0
+
+  task:
+    repo: go-task/task
+
+  flux:
+    repo: fluxcd/flux2
+
+  k3d:
+    repo: k3d-io/k3d
+
+  chainsaw:
+    repo: kyverno/chainsaw
+
+  clusterawsadm:
+    repo: kubernetes-sigs/cluster-api-provider-aws
+
+  packer-plugin-goss:
+    repo: YaleUniversity/packer-plugin-goss
+    path_in_archive: packer-plugin-goss_v3.2.14_x5.0_linux_amd64

@@ -10,6 +10,9 @@ sudo add-apt-repository ppa:deadsnakes/ppa -y
 # Add repositories for WSLUtilities
 sudo add-apt-repository ppa:wslutilities/wslu -y
 
+# Add repositories for Git
+sudo add-apt-repository ppa:git-core/ppa
+
 # Add Docker's official GPG key
 sudo install -m 0755 -d /etc/apt/keyrings
 sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
@@ -31,46 +34,29 @@ sudo apt-get update
 # Install packages
 sudo NEEDRESTART_MODE=a apt install -y python3.12-full python-is-python3 gcc zsh make git \
     apt-transport-https docker-ce docker-ce-cli containerd.io \
-    docker-buildx-plugin docker-compose-plugin net-tools stow \
+    docker-buildx-plugin docker-compose-plugin net-tools stow tree \
     unzip wslu python3-pip vault
 
 # Add your user to the docker group so that you can run docker without sudo
-sudo usermod -aG docker "$USER" && sudo systemctl start docker
+sudo usermod -aG docker "$USER" && sudo systemctl enable docker && sudo systemctl start docker
 
-# Install commitizen
-pip install --user -U commitizen
+# Install nvm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
 
 # Install AWS CLI
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/awscliv2.zip" && \
     unzip /tmp/awscliv2.zip -d /tmp && sudo /tmp/aws/install
 
 # Install kubectl
-curl -L "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" -o /tmp/kubectl && \
-    sudo install -o root -g root -m 0755 /tmp/kubectl /usr/local/bin/kubectl
-
-# Install kubectx and kubens
-sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
-sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
-sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
-
-# Install bosh CLI
-curl -sL https://api.github.com/repos/cloudfoundry/bosh-cli/releases/latest | grep "browser_download_url.*linux-amd64" \
-    | cut -d : -f 2,3 | tr -d \" | sudo wget -O /usr/local/bin/bosh -qi - && sudo chmod a+x /usr/local/bin/bosh
-
-# Install CF CLI
-curl -L https://github.com/cloudfoundry/cli/releases/download/v6.53.0/cf-cli_6.53.0_linux_x86-64.tgz | tar xz -C /tmp && \
-    sudo mv /tmp/cf /usr/local/bin
-
-# Install k9s
-curl -L -o /tmp/k9s.deb https://github.com/derailed/k9s/releases/download/v0.32.7/k9s_linux_amd64.deb && \
-    sudo dpkg -i  /tmp/k9s.deb
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
 # aactivator.py script
 AACTIVATOR_URL="https://raw.githubusercontent.com/Yelp/aactivator/master/aactivator.py"
 
 INSTALL_DIR="$HOME/.local/bin"
 [[ ! -d $INSTALL_DIR ]] && mkdir -p "$INSTALL_DIR"
-path+=${INSTALL_DIR}
+PATH="${PATH:+${PATH}:}${INSTALL_DIR}"
 
 # Download the aactivator.py script
 curl -o "${INSTALL_DIR}/aactivator" "${AACTIVATOR_URL}"
@@ -88,7 +74,7 @@ USER_WORKSPACE=$HOME/workspace/$USER
 # Download and setup config files
 DOTFILES_PATH=$USER_WORKSPACE/dotfiles
 if [[ ! -d $DOTFILES_PATH ]]; then
-    git clone https://github.com/vigneshsubbaram/dotfiles.git "$DOTFILES_PATH"
+    git clone -b "introduce_dotfiles" https://github.com/vigneshsubbaram/dotfiles.git "$DOTFILES_PATH"
 else
     git -C "$DOTFILES_PATH" pull --ff
 fi
@@ -96,9 +82,19 @@ pushd "$DOTFILES_PATH"
 
 [[ ! -d $HOME/.config ]] && mkdir -p "$HOME"/.config
 cp .zshenv ~/
-cp .gitconfig ~/
 
 stow -t "$HOME/.config" .config
+
+ln -sf "$HOME/.config/git/.gitconfig" "$HOME/.gitconfig"
+ln -sf "$HOME/.config/git/.gitignore" "$HOME/.gitignore"
+ln -sf "$HOME/.config/dotbins/.dotbins.yaml" "$HOME/.dotbins.yaml"
+ln -sf "$HOME/.config/bash/.bashrc" "$HOME/.bashrc"
+
+# Install commitizen
+pip install --user -U commitizen dotbins
+
+# Install binaries via dotbins
+dotbins get --dest ~/.local/bin ~/.config/dotbins/dotbins.yaml
 
 # Install zap plugin manager
 zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1 --keep
@@ -107,17 +103,7 @@ stow -t "$HOME/.config" .config
 
 # Setup auto-completion for kubectx and kubens
 mkdir -p ~/.config/zsh/completions
-sudo ln -s /opt/kubectx/completion/_kubectx.zsh ~/.config/zsh/completions/_kubectx
-sudo ln -s /opt/kubectx/completion/_kubens.zsh ~/.config/zsh/completions/_kubens
-
-# Windows terminal
-windowsUsername=$(powershell.exe '$env:UserName' | tr -d '\r')
-terminalDir=/home/vignesh/../../mnt/c/Users/$windowsUsername/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState
-downloadsDir=/home/vignesh/../../mnt/c/Users/$windowsUsername/Downloads
-
-if [ ! -e "$terminalDir/settings.json" ]; then
-    cp ./windows-terminal-settings.json "$terminalDir/LocalState/settings.json"
-    cp ./icons/ubuntu.png "$downloadsDir"
-fi
+curl -sSL https://raw.githubusercontent.com/ahmetb/kubectx/master/completion/_kubectx.zsh -o ~/.config/zsh/completions/_kubectx
+curl -sSL https://raw.githubusercontent.com/ahmetb/kubectx/master/completion/_kubens.zsh -o ~/.config/zsh/completions/_kubens
 
 popd

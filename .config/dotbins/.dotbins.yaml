@@ -1,0 +1,87 @@
+tools_dir:  ~/.local/bin
+
+platforms:
+  linux:
+    - amd64
+
+tools:
+  kubectx:
+    repo: ahmetb/kubectx
+    asset_patterns:
+      linux: kubectx
+
+  kubens:
+    repo: ahmetb/kubectx
+    asset_patterns:
+      linux: kubens
+
+  bosh:
+    repo: cloudfoundry/bosh-cli
+
+  helm:
+    repo: helm/helm 
+
+  helmfile:
+    repo: helmfile/helmfile
+
+  cf:
+    repo: cloudfoundry/cli
+    tag: v6.53.0
+
+  k9s:
+    repo: derailed/k9s
+
+  credhub:
+    repo: cloudfoundry/credhub-cli
+
+  cue:
+    repo: cue-lang/cue
+
+  df-pv:
+    repo: yashbhutwala/kubectl-df-pv
+
+  fly:
+    repo: concourse/concourse
+    asset_patterns:
+      linux: fly-{version}-linux-amd64.tgz
+
+  hugo:
+    repo: gohugoio/hugo
+    asset_patterns:
+      linux: hugo_extended_{version}_linux-amd64.tar.gz
+
+  istioctl:
+    repo: istio/istio
+    asset_patterns:
+      linux: istioctl-{version}-linux-amd64.tar.gz
+
+  kapp:
+    repo: carvel-dev/kapp
+
+  vela:
+    repo: kubevela/kubevela
+    asset_patterns:
+      linux: vela-v{version}-linux-amd64.tar.gz
+
+  yq:
+    repo: mikefarah/yq
+
+  ytt:
+    repo: carvel-dev/ytt
+
+  delta:
+    repo: dandavison/delta
+
+  fd: sharkdp/fd
+
+  bat:
+    repo: sharkdp/bat
+
+  eza:
+    repo: eza-community/eza
+
+  fzf:
+    repo: junegunn/fzf
+
+  rg:
+    repo: BurntSushi/ripgrep

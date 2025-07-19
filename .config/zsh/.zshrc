@@ -5,8 +5,9 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# kubectx and kubens autocompletion scripts
-fpath=(~/.config/zsh/completions $fpath)
+fpath=( ~/.config/zsh/completions  "${fpath[@]}" )
+fpath+=~/.config/zsh/functions
+autoload -Uz $fpath/*(.:t)
 
 # AWS CLI autocompletion
 autoload -Uz bashcompinit && bashcompinit
@@ -65,3 +66,7 @@ command -v fzf >/dev/null 2>&1 && {
 source <(fzf --zsh)
 
 eval "$(aactivator init)"
+
+# add Pulumi to the PATH
+export PATH=$PATH:/home/vignesh/.pulumi/bin
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"

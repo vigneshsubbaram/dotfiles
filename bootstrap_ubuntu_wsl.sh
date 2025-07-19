@@ -94,7 +94,7 @@ ln -sf "$HOME/.config/bash/.bashrc" "$HOME/.bashrc"
 pip install --user -U commitizen dotbins
 
 # Install binaries via dotbins
-dotbins get --dest ~/.local/bin ~/.config/dotbins/dotbins.yaml
+dotbins get --dest ~/.local/bin ~/.config/dotbins/.dotbins.yaml
 
 # Install zap plugin manager
 zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1 --keep

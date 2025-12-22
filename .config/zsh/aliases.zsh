@@ -59,3 +59,4 @@ esac
 
 # disable globbing for pip
 alias pip='noglob pip'
+alias vim='nvim'

@@ -15,3 +15,5 @@ export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -50'"
 # MANPAGER
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export MANROFFOPT="-c"
+
+export EDITOR="nvim"

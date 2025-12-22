@@ -103,6 +103,7 @@ tools:
 
   flux:
     repo: fluxcd/flux2
+    tag: v2.5.0
 
   k3d:
     repo: k3d-io/k3d
@@ -116,3 +117,30 @@ tools:
   packer-plugin-goss:
     repo: YaleUniversity/packer-plugin-goss
     path_in_archive: packer-plugin-goss_v3.2.14_x5.0_linux_amd64
+
+  mustache:
+    repo: quantumew/mustache-cli
+
+  goaccess:
+    repo: allinurl/goaccess
+
+  nvim:
+    repo: neovim/neovim
+
+  ruff:
+    repo: astral-sh/ruff
+    asset_patterns:
+      linux: ruff-x86_64-unknown-linux-gnu.tar.gz
+
+  kind:
+    repo: kubernetes-sigs/kind
+
+  clusterctl:
+    repo: kubernetes-sigs/cluster-api
+    asset_patterns:
+      linux: clusterctl-linux-amd64
+    extract_archive: false
+    binary_name: clusterctl
+
+  velero:
+    repo: vmware-tanzu/velero

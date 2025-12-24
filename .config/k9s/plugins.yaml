@@ -1,0 +1,39 @@
+plugins:
+  kubectl-node_shell:
+    shortCut: Ctrl-N
+    confirm: false
+    description: "Open a root shell on a node using the node-shell plugin"
+    scopes:
+      - node
+    command: kubectl-node_shell
+    background: false
+    args:
+      - $NAME
+      - --context
+      - $CONTEXT
+  vela:
+    shortCut: Ctrl-V
+    confirm: true
+    description: "Restart a kubevela application"
+    scopes:
+      - app
+    command: vela
+    args:
+      - workflow
+      - restart
+      - $NAME
+      - -n
+      - $NAMESPACE
+  webservice: 
+    shortCut: Shift-W
+    confirm: true
+    description: "Restart a webservice"
+    scopes:
+      - ws
+    command: vela
+    args:
+      - workflow
+      - restart
+      - $NAME
+      - -n
+      - $NAMESPACE

@@ -121,9 +121,6 @@ tools:
   mustache:
     repo: quantumew/mustache-cli
 
-  goaccess:
-    repo: allinurl/goaccess
-
   nvim:
     repo: neovim/neovim
 
@@ -144,3 +141,14 @@ tools:
 
   velero:
     repo: vmware-tanzu/velero
+
+  krew:
+    repo: kubernetes-sigs/krew
+    asset_patterns:
+      linux: krew-linux_amd64.tar.gz
+    binary_name: krew
+    path_in_archive: krew-linux_amd64
+
+  cli:
+    repo: cli/cli
+    binary_name: gh

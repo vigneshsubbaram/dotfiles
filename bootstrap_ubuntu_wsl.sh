@@ -106,4 +106,7 @@ mkdir -p ~/.config/zsh/completions
 curl -sSL https://raw.githubusercontent.com/ahmetb/kubectx/master/completion/_kubectx.zsh -o ~/.config/zsh/completions/_kubectx
 curl -sSL https://raw.githubusercontent.com/ahmetb/kubectx/master/completion/_kubens.zsh -o ~/.config/zsh/completions/_kubens
 
+# Install krew
+krew install krew
+
 popd

@@ -6,8 +6,10 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 fpath=( ~/.config/zsh/completions  "${fpath[@]}" )
-fpath+=~/.config/zsh/functions
-autoload -Uz $fpath/*(.:t)
+if [[ -d ~/.config/zsh/functions ]]; then
+  fpath+=(~/.config/zsh/functions)
+  autoload -Uz ~/.config/zsh/functions/*(.:t)
+fi
 
 # AWS CLI autocompletion
 autoload -Uz bashcompinit && bashcompinit

@@ -1,0 +1,10 @@
+{
+  "suggest.noselect": false,
+  "coc.preferences.formatOnSave": false,
+  "pyright.inlayHints.parameterTypes": false,
+  "python.formatting.provider": "ruff",
+  "python.linting.ruffEnabled": true,
+  "signature.enable": true,
+  "signature.target": "float",
+  "snippets.ultisnips.enable": false
+}

@@ -60,3 +60,5 @@ esac
 # disable globbing for pip
 alias pip='noglob pip'
 alias vim='nvim'
+alias code='/snap/bin/code'
+

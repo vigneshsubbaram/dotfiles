@@ -7,9 +7,6 @@ sudo apt-get update -y && sudo NEEDRESTART_MODE=a apt-get upgrade -y && sudo apt
 # Add repositories for python3.12
 sudo add-apt-repository ppa:deadsnakes/ppa -y
 
-# Add repositories for WSLUtilities
-sudo add-apt-repository ppa:wslutilities/wslu -y
-
 # Add repositories for Git
 sudo add-apt-repository ppa:git-core/ppa
 
@@ -44,11 +41,11 @@ sudo usermod -aG docker "$USER" && sudo systemctl enable docker && sudo systemct
 export NVM_DIR="$HOME/.nvm"
 
 if [[ ! -s "$NVM_DIR/nvm.sh" ]]; then
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.7/install.sh | bash
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
 fi
 
 # Load nvm into the current bootstrap shell
-source "${NVM_DIR/nvm.sh/}"
+source "{$NVM_DIR/nvm.sh}"
 
 # Install and select Node.js
 NODE_VERSION="24.18.0"
@@ -106,11 +103,8 @@ ln -sf "$HOME/.config/git/.gitignore" "$HOME/.gitignore"
 ln -sf "$HOME/.config/dotbins/.dotbins.yaml" "$HOME/.dotbins.yaml"
 ln -sf "$HOME/.config/bash/.bashrc" "$HOME/.bashrc"
 
-# Install commitizen
-pip install --user -U commitizen dotbins
-
 # Install binaries via dotbins
-dotbins get --dest ~/.local/bin ~/.config/dotbins/.dotbins.yaml
+~/.local/bin/dotbins get --dest ~/.local/bin ~/.config/dotbins/.dotbins.yaml
 
 UV_TOOLS_FILE="$HOME/.config/uv/uv-tools.yaml"
 if [[ -f "$UV_TOOLS_FILE" ]]; then

@@ -1,0 +1,7 @@
+#!/usr/bin/zsh
+
+update-tools() {
+    GITHUB_TOKEN=$(/home/vigneshsubbaram/.local/bin/gh auth token) ~/.local/bin/dotbins get --dest ~/.local/bin ~/.config/dotbins/.dotbins.yaml 
+    ~/.local/bin/uv tool upgrade --all
+}
+

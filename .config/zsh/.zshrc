@@ -46,7 +46,7 @@ bindkey '^ ' autosuggest-accept
 bindkey -e "^[a" beginning-of-line
 bindkey -e "^[e" end-of-line
 
-export PATH="$HOME/.local/bin":$PATH
+export PATH="$HOME/.local/bin:$PATH"
 
 if command -v bat &> /dev/null; then
   alias cat="bat -pp --theme \"Visual Studio Dark+\""
@@ -70,5 +70,37 @@ source <(fzf --zsh)
 eval "$(aactivator init)"
 
 # add Pulumi to the PATH
-export PATH=$PATH:/home/vignesh/.pulumi/bin
-export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+export PATH="$PATH:$HOME/.pulumi/bin"
+export PATH="$PATH:${KREW_ROOT:-$HOME/.krew}/bin"
+
+unsetopt nomatch
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/tmp/google-cloud-sdk/path.zsh.inc' ]; then . '/tmp/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/tmp/google-cloud-sdk/completion.zsh.inc' ]; then . '/tmp/google-cloud-sdk/completion.zsh.inc'; fi
+xrandr --output eDP-1 --primary
+
+# Load NVM without extendedglob because NVM's Zsh alias handling
+# conflicts with extendedglob.
+if [[ -o extendedglob ]]; then
+  unsetopt extendedglob
+  _nvm_restore_extendedglob=1
+fi
+
+export NVM_DIR="$HOME/.nvm"
+[[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
+
+if [[ -s "$NVM_DIR/bash_completion" ]]; then
+  source "$NVM_DIR/bash_completion"
+fi
+
+if [[ -n "${_nvm_restore_extendedglob:-}" ]]; then
+  setopt extendedglob
+  unset _nvm_restore_extendedglob
+fi
+
+
+
+

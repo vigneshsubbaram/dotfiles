@@ -28,3 +28,7 @@ vim.api.nvim_create_autocmd("CursorHold", {
         vim.diagnostic.open_float(nil, { focus = false, border = "rounded" })
     end,
 })
+
+-- When opening a new file, leave all the folds open.
+vim.opt.foldlevelstart = 99
+

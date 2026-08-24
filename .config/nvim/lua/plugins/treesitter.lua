@@ -1,40 +1,31 @@
 return {
     "nvim-treesitter/nvim-treesitter",
-    branch = "master",
-    lazy = false,
+    lazy = false, -- does not support lazy-loading
     build = ":TSUpdate",
-    dependencies = {
-        "nvim-treesitter/nvim-treesitter-textobjects",
-    },
-
     config = function()
-        require("nvim-treesitter.configs").setup({
-            ensure_installed = {
-                "c", "lua", "vim", "vimdoc", "query", "markdown", 
-                "markdown_inline", "python", "tsx", "typescript", 
-                "go", "yaml", "bash" 
-            },
+        require("nvim-treesitter").install({
+            "bash", "c", "go", "lua", "markdown",
+            "markdown_inline", "python", "tsx",
+            "typescript", "vim", "vimdoc", "yaml"
+        })
 
-            highlight = { 
-                enable = true,
-            },
+        -- Highlighting is no longer a plugin setting. 
+        -- tell Neovim natively to start it for all files.
+        vim.api.nvim_create_autocmd("FileType", {
+            pattern = "*",
+            callback = function()
+                -- pcall prevents errors on filetypes that don't have parsers
+                pcall(vim.treesitter.start)
+            end,
+        })
 
-            indent = { 
-                enable = true,
-            },
-
-            textobjects = {
-                select = {
-                    enable = true,
-                    lookahead = true, 
-                    keymaps = {
-                        ["af"] = { query = "@function.outer", desc = "Select outer part of a function" },
-                        ["if"] = { query = "@function.inner", desc = "Select inner part of a function" },
-                        ["ac"] = { query = "@class.outer", desc = "Select outer part of a class" },
-                        ["ic"] = { query = "@class.inner", desc = "Select inner part of a class" },
-                    },
-                },
-            },
+        -- Folds
+        vim.api.nvim_create_autocmd("FileType", {
+            pattern = "*",
+            callback = function()
+                vim.wo[0][0].foldexpr = "v:lua.vim.treesitter.foldexpr()"
+                vim.wo[0][0].foldmethod = "expr"
+            end,
         })
     end,
 }
